@@ -39,10 +39,12 @@ namespace JokesClient
 
             while (userHasQuitApp == false)
             {
+                Console.WriteLine("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
                 Console.WriteLine("Please select a number from the following choices:");
                 Console.WriteLine("(1) - Receive a random programming joke.");
-                Console.WriteLine("(2) - Receive ten random jokes.");
+                Console.WriteLine("(2) - Receive ten random programming jokes.");
                 Console.WriteLine("(3) - Quit the application.");
+                Console.WriteLine("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
 
                 var choice = PromptForInteger("Choice:");
 
@@ -54,15 +56,32 @@ namespace JokesClient
 
                     foreach (var joke in jokes)
                     {
-                        Console.WriteLine($"This is a {joke.type} joke. The joke goes as follows: {joke.setup} {joke.punchline}");
+                        Console.WriteLine($"The joke goes as follows: {joke.setup}");
+                        Console.WriteLine($"Press ANY key to see the punchline");
+                        Console.ReadKey();
+                        Console.WriteLine($"{joke.punchline}");
+                        Console.WriteLine("Ha! Was that not hilarious? Press ANY key to return back to the main menu to view more jokes!");
+                        Console.ReadKey();
                     }
                 }
 
+                if (choice == 2)
+                {
+                    var responseAsStream = await client.GetStreamAsync("https://official-joke-api.appspot.com/jokes/programming/ten");
 
+                    var jokes = await JsonSerializer.DeserializeAsync<List<Joke>>(responseAsStream);
 
+                    foreach (var joke in jokes)
+                    {
+                        Console.WriteLine($"The joke goes as follows: {joke.setup} {joke.punchline}");
+                    }
+                }
+
+                if (choice == 3)
+                {
+                    userHasQuitApp = true;
+                }
             }
-
-
         }
     }
 }
