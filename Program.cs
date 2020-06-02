@@ -36,7 +36,7 @@ namespace JokesClient
                 Console.WriteLine("Please select a number from the following choices:");
                 Console.WriteLine("(1) - Receive a random programming joke.");
                 Console.WriteLine("(2) - Receive ten random programming jokes.");
-                Console.WriteLine("(3) - Receive a randon general joke.");
+                Console.WriteLine("(3) - Receive a random general joke.");
                 Console.WriteLine("(4) = Quit the application.");
                 Console.WriteLine("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
 
