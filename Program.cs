@@ -8,6 +8,22 @@ namespace JokesClient
 {
     class Program
     {
+        static int PromptForInteger(string prompt)
+        {
+            Console.Write(prompt);
+            int userInput;
+            var isThisGoodInput = Int32.TryParse(Console.ReadLine(), out userInput);
+
+            if (isThisGoodInput)
+            {
+                return userInput;
+            }
+            else
+            {
+                Console.WriteLine("Sorry, that isn't a valid input, I'm using 0 as your answer.");
+                return 0;
+            }
+        }
         class Joke
         {
             public int id { get; set; }
@@ -23,9 +39,19 @@ namespace JokesClient
 
             var jokes = await JsonSerializer.DeserializeAsync<List<Joke>>(responseAsStream);
 
+            var userHasQuitApp = false;
+
+            while (userHasQuitApp == false)
+            {
+                Console.WriteLine("Please select a number from the following choices:");
+                Console.WriteLine("(1) - Receive a random programming joke.");
+                Console.WriteLine("(2) - Receive ten random jokes.");
+                Console.WriteLine("(3) - Quit the application.");
+            }
+
             foreach (var joke in jokes)
             {
-                Console.WriteLine($"Thi is a {joke.type} joke. The joke goes as follows: {joke.setup} {joke.punchline}");
+                Console.WriteLine($"This is a {joke.type} joke. The joke goes as follows: {joke.setup} {joke.punchline}");
             }
         }
     }
