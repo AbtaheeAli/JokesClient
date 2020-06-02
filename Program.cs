@@ -35,10 +35,6 @@ namespace JokesClient
         {
             var client = new HttpClient();
 
-            var responseAsStream = await client.GetStreamAsync("https://official-joke-api.appspot.com/jokes/programming/random");
-
-            var jokes = await JsonSerializer.DeserializeAsync<List<Joke>>(responseAsStream);
-
             var userHasQuitApp = false;
 
             while (userHasQuitApp == false)
@@ -47,12 +43,26 @@ namespace JokesClient
                 Console.WriteLine("(1) - Receive a random programming joke.");
                 Console.WriteLine("(2) - Receive ten random jokes.");
                 Console.WriteLine("(3) - Quit the application.");
+
+                var choice = PromptForInteger("Choice:");
+
+                if (choice == 1)
+                {
+                    var responseAsStream = await client.GetStreamAsync("https://official-joke-api.appspot.com/jokes/programming/random");
+
+                    var jokes = await JsonSerializer.DeserializeAsync<List<Joke>>(responseAsStream);
+
+                    foreach (var joke in jokes)
+                    {
+                        Console.WriteLine($"This is a {joke.type} joke. The joke goes as follows: {joke.setup} {joke.punchline}");
+                    }
+                }
+
+
+
             }
 
-            foreach (var joke in jokes)
-            {
-                Console.WriteLine($"This is a {joke.type} joke. The joke goes as follows: {joke.setup} {joke.punchline}");
-            }
+
         }
     }
 }
