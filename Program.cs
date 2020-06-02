@@ -40,7 +40,7 @@ namespace JokesClient
                 Console.WriteLine("(4) = Quit the application.");
                 Console.WriteLine("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
 
-                var choice = PromptForInteger("Choice:");
+                var choice = PromptForInteger("Choice: ");
 
                 if (choice == 1)
                 {
