@@ -36,7 +36,8 @@ namespace JokesClient
                 Console.WriteLine("Please select a number from the following choices:");
                 Console.WriteLine("(1) - Receive a random programming joke.");
                 Console.WriteLine("(2) - Receive ten random programming jokes.");
-                Console.WriteLine("(3) - Quit the application.");
+                Console.WriteLine("(3) - Receive a randon general joke.");
+                Console.WriteLine("(4) = Quit the application.");
                 Console.WriteLine("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
 
                 var choice = PromptForInteger("Choice:");
@@ -71,6 +72,23 @@ namespace JokesClient
                 }
 
                 if (choice == 3)
+                {
+                    var responseAsStream = await client.GetStreamAsync("https://official-joke-api.appspot.com/jokes/general/random");
+
+                    var jokes = await JsonSerializer.DeserializeAsync<List<Joke>>(responseAsStream);
+
+                    foreach (var joke in jokes)
+                    {
+                        Console.WriteLine($"The joke goes as follows: {joke.SetUp}");
+                        Console.WriteLine($"Press ANY key to see the punchline");
+                        Console.ReadKey();
+                        Console.WriteLine($"{joke.PunchLine}");
+                        Console.WriteLine("Ha! Was that not hilarious? Press ANY key to return back to the main menu to view more jokes!");
+                        Console.ReadKey();
+                    }
+                }
+
+                if (choice == 4)
                 {
                     userHasQuitApp = true;
                 }
