@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace JokesClient
@@ -26,10 +27,17 @@ namespace JokesClient
         }
         class Joke
         {
-            public int id { get; set; }
-            public string type { get; set; }
-            public string setup { get; set; }
-            public string punchline { get; set; }
+            [JsonPropertyName("id")]
+            public int Id { get; set; }
+
+            [JsonPropertyName("type")]
+            public string Type { get; set; }
+
+            [JsonPropertyName("setup")]
+            public string SetUp { get; set; }
+
+            [JsonPropertyName("punchline")]
+            public string PunchLine { get; set; }
         }
         static async Task Main(string[] args)
         {
@@ -56,10 +64,10 @@ namespace JokesClient
 
                     foreach (var joke in jokes)
                     {
-                        Console.WriteLine($"The joke goes as follows: {joke.setup}");
+                        Console.WriteLine($"The joke goes as follows: {joke.SetUp}");
                         Console.WriteLine($"Press ANY key to see the punchline");
                         Console.ReadKey();
-                        Console.WriteLine($"{joke.punchline}");
+                        Console.WriteLine($"{joke.PunchLine}");
                         Console.WriteLine("Ha! Was that not hilarious? Press ANY key to return back to the main menu to view more jokes!");
                         Console.ReadKey();
                     }
@@ -73,7 +81,7 @@ namespace JokesClient
 
                     foreach (var joke in jokes)
                     {
-                        Console.WriteLine($"The joke goes as follows: {joke.setup} {joke.punchline}");
+                        Console.WriteLine($"The joke goes as follows: {joke.SetUp} {joke.PunchLine}");
                     }
                 }
 
